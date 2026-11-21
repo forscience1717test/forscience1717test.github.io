@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="ku">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Asîman — Bi Kurmancî li pey matematîkê</title>
+<meta name="description" content="Asîman: gotar, delîlên bêdeng, portreyên matematîkzanan û pêşkêşiyên ji bo hezkirinên matematîkê, bi Kurmancî.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--accent:#ca9b52;--ink:#464646;--dark:#222;--line:#e5e5e5;--soft:#f7f5f1}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Open Sans',sans-serif;color:var(--ink);background:#fff;line-height:1.7;font-size:15px}
+a{color:inherit;text-decoration:none;transition:color .2s,background .2s,border .2s}
+a:hover{color:var(--accent)}
+ul{list-style:none}
+h1,h2,h3,h4{font-family:'Playfair Display',serif;color:var(--dark);font-weight:600;line-height:1.3}
+.wrap{max-width:1170px;margin:0 auto;padding:0 20px}
+svg.th{width:100%;height:100%;display:block}
+
+/* top bar */
+.topbar{border-bottom:1px solid var(--line);font-size:12px;letter-spacing:.5px;text-transform:uppercase}
+.topbar .wrap{display:flex;justify-content:space-between;align-items:center;height:44px}
+.social{display:flex;gap:6px}
+.social a{width:30px;height:30px;display:grid;place-items:center;border-radius:50%;font-weight:700;font-size:12px}
+.social a:hover{background:var(--accent);color:#fff}
+
+/* logo */
+.brand{text-align:center;padding:38px 0 26px}
+.brand a{display:inline-block}
+.brand .mark{font-family:'Playfair Display',serif;font-size:46px;color:var(--dark);letter-spacing:1px;line-height:1}
+.brand .mark b{color:var(--accent)}
+.brand small{display:block;margin-top:8px;font-size:12px;letter-spacing:3px;text-transform:uppercase;color:#888}
+
+/* nav */
+.nav{border-top:1px solid var(--line);border-bottom:1px solid var(--line);position:sticky;top:0;background:#fff;z-index:50}
+.nav .wrap{display:flex;justify-content:center;align-items:center;position:relative}
+.menu{display:flex;flex-wrap:wrap;justify-content:center}
+.menu>li{position:relative}
+.menu>li>a{display:block;padding:15px 18px;font-size:12px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--dark)}
+.menu>li>a:hover,.menu>li:hover>a{color:var(--accent)}
+.sub{position:absolute;left:0;top:100%;min-width:240px;background:#fff;border:1px solid var(--line);border-top:2px solid var(--accent);opacity:0;visibility:hidden;transform:translateY(8px);transition:.2s;box-shadow:0 8px 24px rgba(0,0,0,.07)}
+.menu li:hover>.sub{opacity:1;visibility:visible;transform:none}
+.sub li{position:relative}
+.sub a{display:block;padding:10px 18px;font-size:12px;letter-spacing:.8px;text-transform:uppercase;border-bottom:1px solid #f1f1f1}
+.sub .sub{left:100%;top:-2px}
+.burger{display:none;background:none;border:0;font-size:24px;padding:10px;cursor:pointer;color:var(--dark)}
+.sbtn{position:absolute;right:20px;background:none;border:0;cursor:pointer;font-size:16px;color:var(--dark)}
+.searchbar{display:none;border-bottom:1px solid var(--line);padding:16px 0;background:var(--soft)}
+.searchbar.open{display:block}
+.searchbar form{display:flex;max-width:600px;margin:auto;gap:8px}
+.searchbar input{flex:1;padding:11px 14px;border:1px solid #d8d8d8;font:inherit}
+.btn{background:var(--dark);color:#fff;border:0;padding:11px 24px;font:700 12px 'Open Sans';letter-spacing:1.5px;text-transform:uppercase;cursor:pointer}
+.btn:hover{background:var(--accent);color:#fff}
+
+/* hero slider */
+.hero{position:relative;margin:30px auto 0;max-width:1170px;padding:0 20px}
+.slides{position:relative;height:480px;overflow:hidden}
+.slide{position:absolute;inset:0;opacity:0;transition:opacity .8s;display:flex;align-items:flex-end;justify-content:center;text-align:center}
+.slide.on{opacity:1;z-index:2}
+.slide .bg{position:absolute;inset:0}
+.slide .bg svg{width:100%;height:100%}
+.slide::after{content:"";position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.65),rgba(0,0,0,.05) 65%)}
+.cap{position:relative;z-index:3;color:#fff;padding:0 30px 46px;max-width:760px}
+.cap .cat{display:inline-block;font-size:11px;letter-spacing:2px;text-transform:uppercase;background:var(--accent);padding:3px 12px;margin-bottom:14px;font-weight:700}
+.cap h2{color:#fff;font-size:36px;margin-bottom:10px}
+.cap p{font-size:13px;letter-spacing:1px;text-transform:uppercase;opacity:.85}
+.arrow{position:absolute;top:50%;transform:translateY(-50%);z-index:5;width:44px;height:44px;border:0;background:rgba(255,255,255,.85);cursor:pointer;font-size:20px}
+.arrow:hover{background:var(--accent);color:#fff}
+.arrow.l{left:34px}.arrow.r{right:34px}
+.dots{position:absolute;bottom:14px;left:0;right:0;z-index:5;display:flex;justify-content:center;gap:8px}
+.dots i{width:9px;height:9px;border-radius:50%;background:rgba(255,255,255,.5);cursor:pointer}
+.dots i.on{background:#fff}
+
+/* layout */
+.main{display:grid;grid-template-columns:minmax(0,1fr) 320px;gap:50px;padding:50px 20px}
+.filterinfo{display:none;margin-bottom:26px;padding:12px 16px;background:var(--soft);border-left:3px solid var(--accent);font-size:13px}
+.filterinfo a{color:var(--accent);font-weight:700;margin-left:10px;cursor:pointer}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:46px 34px}
+.post{text-align:center}
+.post.first{grid-column:1/-1}
+.thumb{display:block;aspect-ratio:16/10;overflow:hidden;position:relative;margin-bottom:22px}
+.post.first .thumb{aspect-ratio:16/10}
+.thumb svg{transition:transform .6s}
+.thumb:hover svg{transform:scale(1.05)}
+.post .cat{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--accent);font-weight:700}
+.post h3{font-size:24px;margin:8px 0 10px}
+.post.first h3{font-size:32px}
+.meta{font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:#999;margin-bottom:14px}
+.meta span+span::before{content:"•";margin:0 8px}
+.post p.ex{font-size:14px;color:#666;max-width:520px;margin:0 auto 18px}
+.more{display:inline-flex;align-items:center;gap:12px;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--dark)}
+.more::before,.more::after{content:"";width:28px;height:1px;background:var(--dark);transition:.2s}
+.more:hover::before,.more:hover::after{background:var(--accent);width:40px}
+.share{margin-top:18px;padding-top:14px;border-top:1px solid var(--line);display:flex;justify-content:center;gap:16px;font-size:11px;letter-spacing:1px;text-transform:uppercase;color:#999}
+.share a:hover{color:var(--accent)}
+.empty{display:none;text-align:center;padding:60px 0;color:#888}
+.pager{display:flex;justify-content:center;gap:6px;margin-top:56px;flex-wrap:wrap}
+.pager a{min-width:40px;height:40px;display:grid;place-items:center;padding:0 14px;border:1px solid var(--line);font-size:12px;font-weight:700}
+.pager a.on,.pager a:hover{background:var(--dark);border-color:var(--dark);color:#fff}
+
+/* sidebar */
+.widget{margin-bottom:46px}
+.widget>h4{text-align:center;font-size:12px;letter-spacing:3px;text-transform:uppercase;font-family:'Open Sans';font-weight:700;position:relative;margin-bottom:24px}
+.widget>h4 span{background:#fff;padding:0 14px;position:relative}
+.widget>h4::before{content:"";position:absolute;left:0;right:0;top:50%;border-top:1px solid var(--line)}
+.about{text-align:center;font-size:14px}
+.about .av{background:#f2e7d5;width:120px;height:120px;border-radius:50%;overflow:hidden;margin:0 auto 16px;border:4px solid var(--soft)}
+.about .nm{font-family:'Playfair Display';font-size:20px;color:var(--dark);margin-bottom:6px}
+.wsearch{display:flex}
+.wsearch input{flex:1;min-width:0;padding:11px 12px;border:1px solid #d8d8d8;font:inherit}
+.wsearch button{border:0;background:var(--dark);color:#fff;padding:0 16px;cursor:pointer}
+.wsearch button:hover{background:var(--accent)}
+.pop li{display:grid;grid-template-columns:78px 1fr;gap:14px;align-items:center;padding:12px 0;border-bottom:1px solid var(--line)}
+.pop .pt{width:78px;height:78px;overflow:hidden;position:relative}
+.pop .pt em{position:absolute;left:0;top:0;background:var(--accent);color:#fff;font:700 11px 'Open Sans';padding:1px 7px;z-index:2;font-style:normal}
+.pop h5{font-family:'Playfair Display';font-size:15px;line-height:1.4;color:var(--dark)}
+.pop small{font-size:11px;letter-spacing:1px;color:#999;text-transform:uppercase}
+.cats li{border-bottom:1px solid var(--line)}
+.cats a{display:flex;justify-content:space-between;padding:10px 0;font-size:13px;letter-spacing:1px;text-transform:uppercase}
+.cats a span{color:#aaa}
+.tags{display:flex;flex-wrap:wrap;gap:8px;justify-content:center}
+.tags a{border:1px solid var(--line);padding:3px 12px;font-size:12px}
+.tags a:hover{background:var(--accent);border-color:var(--accent);color:#fff}
+.nl{background:var(--soft);padding:28px 22px;text-align:center}
+.nl p{font-size:13px;margin-bottom:14px}
+.nl input{width:100%;padding:11px;border:1px solid #d8d8d8;margin-bottom:10px;font:inherit}
+.nl .btn{width:100%}
+.nl .ok{display:none;color:#3b7a3b;font-weight:600;font-size:13px}
+
+/* footer */
+.strip{display:grid;grid-template-columns:repeat(6,1fr)}
+.strip div{aspect-ratio:1;overflow:hidden}
+.strip svg{transition:transform .5s}
+.strip div:hover svg{transform:scale(1.1)}
+footer{background:#1d1d1d;color:#bbb;text-align:center;padding:54px 20px 34px}
+footer .mark{font-family:'Playfair Display';font-size:30px;color:#fff}
+footer .mark b{color:var(--accent)}
+footer .social{justify-content:center;margin:18px 0}
+footer .social a{border:1px solid #444}
+footer p{font-size:13px;margin-top:6px}
+footer .fm{display:flex;justify-content:center;flex-wrap:wrap;gap:22px;font-size:11px;letter-spacing:2px;text-transform:uppercase;margin:20px 0}
+.totop{position:fixed;right:22px;bottom:22px;width:44px;height:44px;border:0;background:var(--dark);color:#fff;font-size:18px;cursor:pointer;opacity:0;visibility:hidden;transition:.3s;z-index:60}
+.totop.show{opacity:1;visibility:visible}
+.totop:hover{background:var(--accent)}
+
+@media(max-width:960px){
+ .main{grid-template-columns:1fr}
+ .slides{height:380px}.cap h2{font-size:26px}
+ .arrow.l{left:26px}.arrow.r{right:26px}
+}
+@media(max-width:720px){
+ .burger{display:block;margin-right:auto}
+ .nav .wrap{justify-content:flex-start;min-height:48px}
+ .menu{display:none;position:absolute;top:100%;left:0;right:0;background:#fff;border-top:1px solid var(--line);flex-direction:column;box-shadow:0 10px 20px rgba(0,0,0,.08);max-height:75vh;overflow:auto}
+ .menu.open{display:flex}
+ .sub{position:static;opacity:1;visibility:visible;transform:none;border:0;box-shadow:none;padding-left:16px;display:block}
+ .sub .sub{padding-left:16px}
+ .grid{grid-template-columns:1fr}
+ .brand .mark{font-size:34px}
+ .slides{height:320px}.cap h2{font-size:21px}
+ .strip{grid-template-columns:repeat(3,1fr)}
+ .topbar .date{display:none}.topbar .wrap{justify-content:center}
+}
+</style>
+</head>
+<body>
+
+<!-- SVG sprite: wêneyên nîşandanê -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+ <defs>
+  <symbol id="t1" viewBox="0 0 600 380" preserveAspectRatio="xMidYMid slice">
+   <rect width="600" height="380" fill="#f3ede1"/>
+   <g transform="translate(75 0)">
+    <polygon points="250,40 450,140 350,340 150,240" fill="#25435e"/>
+    <polygon points="150,40 250,40 150,240" fill="#ca9b52"/>
+    <polygon points="250,40 450,40 450,140" fill="#e0b873"/>
+    <polygon points="450,140 450,340 350,340" fill="#ca9b52"/>
+    <polygon points="350,340 150,340 150,240" fill="#e0b873"/>
+    <text x="250" y="168" font-family="Playfair Display,serif" font-size="46" fill="#f3ede1" text-anchor="middle" font-style="italic">c²</text>
+    <text x="195" y="86" font-family="Playfair Display,serif" font-size="26" fill="#25435e" font-style="italic">a</text>
+    <text x="150" y="150" font-family="Playfair Display,serif" font-size="26" fill="#25435e" font-style="italic">b</text>
+   </g>
+  </symbol>
+  <symbol id="t2" viewBox="0 0 600 380" preserveAspectRatio="xMidYMid slice">
+   <rect width="600" height="380" fill="#eaf0ee"/>
+   <g transform="translate(75 0)">
+    <rect x="150" y="40" width="190" height="190" fill="#2f6f73"/>
+    <rect x="340" y="40" width="110" height="190" fill="#ca9b52"/>
+    <rect x="150" y="230" width="190" height="110" fill="#ca9b52"/>
+    <rect x="340" y="230" width="110" height="110" fill="#c4553d"/>
+    <g font-family="Playfair Display,serif" font-style="italic" fill="#fff" font-size="40" text-anchor="middle">
+     <text x="245" y="148">a²</text><text x="395" y="148">ab</text><text x="245" y="298">ab</text><text x="395" y="298">b²</text>
+    </g>
+   </g>
+  </symbol>
+  <symbol id="t3" viewBox="0 0 600 380" preserveAspectRatio="xMidYMid slice">
+   <rect width="600" height="380" fill="#efeaf3"/>
+   <g transform="translate(100 0)">
+    <rect x="50" y="40" width="300" height="300" fill="#4b3a6b"/>
+    <rect x="50" y="100" width="240" height="240" fill="#6b5590"/>
+    <rect x="50" y="160" width="180" height="180" fill="#8f79b8"/>
+    <rect x="50" y="220" width="120" height="120" fill="#ca9b52"/>
+    <rect x="50" y="280" width="60" height="60" fill="#e8c98b"/>
+    <text x="380" y="195" font-family="Playfair Display,serif" font-size="30" fill="#4b3a6b" font-style="italic">1³+2³+…</text>
+   </g>
+  </symbol>
+  <symbol id="t4" viewBox="0 0 600 380" preserveAspectRatio="xMidYMid slice">
+   <rect width="600" height="380" fill="#dfe6ee"/>
+   <g font-family="Playfair Display,serif" fill="#25435e" opacity=".28" font-style="italic">
+    <text x="40" y="90" font-size="44">∑</text><text x="470" y="80" font-size="52">∫</text><text x="60" y="330" font-size="44">∂</text><text x="470" y="320" font-size="40">∞</text>
+   </g>
+   <circle cx="300" cy="145" r="64" fill="#25435e"/>
+   <path d="M140 380c8-95 70-135 160-135s152 40 160 135z" fill="#25435e"/>
+   <circle cx="300" cy="145" r="64" fill="none" stroke="#ca9b52" stroke-width="4" transform="translate(10 8)"/>
+  </symbol>
+  <symbol id="t5" viewBox="0 0 600 380" preserveAspectRatio="xMidYMid slice">
+   <rect width="600" height="380" fill="#f6ece8"/>
+   <g stroke="#d6b9ae" stroke-width="2">
+    <path d="M150 40v300M210 40v300M270 40v300M330 40v300M390 40v300M450 40v300M150 40h300M150 100h300M150 160h300M150 220h300M150 280h300M150 340h300"/>
+   </g>
+   <path d="M150 340h60v-60h60v-60h60v-60h60v-60h60v-60" fill="none" stroke="#c4553d" stroke-width="9" stroke-linejoin="round"/>
+   <circle cx="150" cy="340" r="12" fill="#25435e"/><circle cx="450" cy="40" r="12" fill="#ca9b52"/>
+   <text x="486" y="60" font-family="Playfair Display,serif" font-size="30" fill="#25435e" font-style="italic">?</text>
+  </symbol>
+  <symbol id="t6" viewBox="0 0 600 380" preserveAspectRatio="xMidYMid slice">
+   <rect width="600" height="380" fill="#edf1e6"/>
+   <rect x="150" y="280" width="300" height="52" fill="#3f6b3a"/><rect x="170" y="290" width="260" height="6" fill="#e8c98b"/>
+   <rect x="175" y="226" width="270" height="54" fill="#ca9b52"/><rect x="195" y="236" width="230" height="6" fill="#fff" opacity=".7"/>
+   <rect x="160" y="172" width="250" height="54" fill="#25435e"/><rect x="180" y="182" width="210" height="6" fill="#e8c98b"/>
+   <rect x="190" y="118" width="230" height="54" fill="#c4553d"/><rect x="210" y="128" width="190" height="6" fill="#fff" opacity=".7"/>
+   <text x="300" y="98" text-anchor="middle" font-family="Playfair Display,serif" font-size="40" fill="#3f6b3a" font-style="italic">x² + y²</text>
+  </symbol>
+  <symbol id="t7" viewBox="0 0 600 380" preserveAspectRatio="xMidYMid slice">
+   <rect width="600" height="380" fill="#f2e7d5"/>
+   <g font-family="Playfair Display,serif" fill="#7a5a22" opacity=".25" font-style="italic">
+    <text x="40" y="100" font-size="38">π</text><text x="480" y="90" font-size="40">e</text><text x="50" y="330" font-size="40">φ</text><text x="480" y="330" font-size="38">√</text>
+   </g>
+   <circle cx="300" cy="150" r="62" fill="#7a5a22"/>
+   <path d="M150 380c6-92 66-132 150-132s144 40 150 132z" fill="#7a5a22"/>
+   <path d="M238 135a62 62 0 0 1 124 0" fill="none" stroke="#ca9b52" stroke-width="10"/>
+  </symbol>
+  <symbol id="t8" viewBox="0 0 600 380" preserveAspectRatio="xMidYMid slice">
+   <rect width="600" height="380" fill="#e6eef6"/>
+   <circle cx="300" cy="190" r="140" fill="none" stroke="#25435e" stroke-width="6"/>
+   <circle cx="300" cy="190" r="140" fill="none" stroke="#ca9b52" stroke-width="6" stroke-dasharray="440 440" transform="rotate(-90 300 190)" opacity=".9"/>
+   <text x="300" y="250" text-anchor="middle" font-family="Playfair Display,serif" font-size="170" fill="#25435e" font-style="italic">π</text>
+   <polygon points="262,140 345,190 262,240" fill="#ca9b52" opacity="0"/>
+  </symbol>
+ </defs>
+</svg>
+
+<div class="topbar">
+ <div class="wrap">
+  <div class="social" aria-label="Torên civakî">
+   <a href="#" aria-label="Facebook">f</a><a href="#" aria-label="X">X</a><a href="#" aria-label="Instagram">in</a><a href="#" aria-label="YouTube">▶</a>
+  </div>
+  <div class="date" id="today"></div>
+ </div>
+</div>
+
+<header class="brand">
+ <a href="#" data-cat="all">
+  <span class="mark"><b>Asîman</b></span>
+  <small>Bi Kurmancî li pey matematîkê</small>
+ </a>
+</header>
+
+<nav class="nav">
+ <div class="wrap">
+  <button class="burger" id="burger" aria-label="Menû">☰</button>
+  <ul class="menu" id="menu">
+   <li><a href="#" data-cat="all">Destpêk</a></li>
+   <li><a href="#blog" data-cat="all">Blog ▾</a>
+    <ul class="sub">
+     <li><a href="#blog" data-cat="Portreya Matematîkzanekî">Portreya Matematîkzanekî</a></li>
+     <li><a href="#blog" data-cat="Pirsa Hefteyê">Pirsa Hefteyê</a></li>
+     <li><a href="#blog" data-cat="Pêşkêşî">Pêşkêşî ▸</a>
+      <ul class="sub">
+       <li><a href="#blog" data-cat="Pêşkêşî · Pirtûk">Pirtûk</a></li>
+       <li><a href="#blog" data-cat="Pêşkêşî · Fîlm / Vîdyo">Fîlm / Vîdyo</a></li>
+       <li><a href="#blog" data-cat="Pêşkêşî · Çavkaniya Înternetê">Çavkaniya Înternetê</a></li>
+      </ul>
+     </li>
+     <li><a href="#blog" data-cat="Delîlên Bêdeng">Delîlên Bêdeng</a></li>
+     <li><a href="#blog" data-cat="Hevpeyvîn">Hevpeyvînên Matematîkzanan</a></li>
+    </ul>
+   </li>
+   <li><a href="#blog" data-cat="Çalakî">Çalakî</a></li>
+   <li><a href="#bulten">Bibe Abone!</a></li>
+   <li><a href="#bulten">Bibe Dilxwaz!</a></li>
+  </ul>
+  <button class="sbtn" id="sbtn" aria-label="Bigere">🔍</button>
+ </div>
+</nav>
+<div class="searchbar" id="searchbar">
+ <div class="wrap">
+  <form id="sform"><input id="q" type="search" placeholder="Li vir binivîse û bigere…"><button class="btn" type="submit">Bigere</button></form>
+ </div>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+ <div class="slides" id="slides">
+  <div class="slide on"><div class="bg" style="background:#f3ede1"><svg viewBox="0 0 600 380" preserveAspectRatio="xMidYMid meet"><use href="#t1" width="600" height="380"/></svg></div>
+   <div class="cap"><span class="cat">Delîlên Bêdeng</span><h2>Teoremeya Pîtagoras bêyî peyv</h2><p>22 Mijdar 2026 &nbsp;•&nbsp; Rojda Demir</p></div></div>
+  <div class="slide"><div class="bg" style="background:#dfe6ee"><svg viewBox="0 0 600 380" preserveAspectRatio="xMidYMid meet"><use href="#t4" width="600" height="380"/></svg></div>
+   <div class="cap"><span class="cat">Portreya Matematîkzanekî</span><h2>Emmy Noether: jina ku bingeh guhert</h2><p>18 Mijdar 2026 &nbsp;•&nbsp; Azad Yıldız</p></div></div>
+  <div class="slide"><div class="bg" style="background:#f6ece8"><svg viewBox="0 0 600 380" preserveAspectRatio="xMidYMid meet"><use href="#t5" width="600" height="380"/></svg></div>
+   <div class="cap"><span class="cat">Pirsa Hefteyê</span><h2>Di tora 5×5 de çend rê hene?</h2><p>15 Mijdar 2026 &nbsp;•&nbsp; Berfîn Kaya</p></div></div>
+  <button class="arrow l" id="prev" aria-label="Berê">‹</button>
+  <button class="arrow r" id="next" aria-label="Paşê">›</button>
+  <div class="dots" id="dots"><i class="on"></i><i></i><i></i></div>
+ </div>
+</section>
+
+<!-- MAIN -->
+<div class="wrap main" id="blog">
+ <main>
+  <div class="filterinfo" id="finfo"><span id="ftext"></span><a id="fclear">✕ Pak bike</a></div>
+  <div class="grid" id="grid">
+
+   <article class="post first" data-cat="Delîlên Bêdeng" data-pop="9">
+    <a class="thumb" href="#"><svg class="th"><use href="#t1"/></svg></a>
+    <span class="cat">Delîlên Bêdeng</span>
+    <h3><a href="#">Delîlên Bêdeng: a² + b² = c²</a></h3>
+    <div class="meta"><span>22 Mijdar 2026</span><span>Rojda Demir</span></div>
+    <p class="ex">Bêyî ku peyvek were nivîsandin, tenê bi çend şiklên rengîn delîla navdar a Pîtagoras tê dîtin. Çar sêgoşeyên hevseng û du çargoşe têra wê dikin.</p>
+    <a class="more" href="#">Bêtir bixwîne</a>
+    <div class="share"><a href="#">Facebook</a><a href="#">X</a><a href="#">E-name</a><a href="#">WhatsApp</a></div>
+   </article>
+
+   <article class="post" data-cat="Delîlên Bêdeng" data-pop="7">
+    <a class="thumb" href="#"><svg class="th"><use href="#t2"/></svg></a>
+    <span class="cat">Delîlên Bêdeng</span>
+    <h3><a href="#">Delîlên Bêdeng: (a + b)²</a></h3>
+    <div class="meta"><span>20 Mijdar 2026</span><span>Rojda Demir</span></div>
+    <p class="ex">Çargoşeyek bi aliyê a + b dabeş bike: du çargoşe û du çargoşeyên rastgoşe derdikevin. Formûl bi çavan tê dîtin.</p>
+    <a class="more" href="#">Bêtir bixwîne</a>
+    <div class="share"><a href="#">Facebook</a><a href="#">X</a><a href="#">E-name</a><a href="#">WhatsApp</a></div>
+   </article>
+
+   <article class="post" data-cat="Portreya Matematîkzanekî" data-pop="8">
+    <a class="thumb" href="#"><svg class="th"><use href="#t4"/></svg></a>
+    <span class="cat">Portreya Matematîkzanekî</span>
+    <h3><a href="#">Emmy Noether: jina ku bingeh guhert</a></h3>
+    <div class="meta"><span>18 Mijdar 2026</span><span>Azad Yıldız</span></div>
+    <p class="ex">Bi teoremeya xwe ya navdar, Noether têkiliya di navbera sîmetrî û qanûnên parastinê de eşkere kir û cebira razber nû çêkir.</p>
+    <a class="more" href="#">Bêtir bixwîne</a>
+    <div class="share"><a href="#">Facebook</a><a href="#">X</a><a href="#">E-name</a><a href="#">WhatsApp</a></div>
+   </article>
+
+   <article class="post" data-cat="Pirsa Hefteyê" data-pop="6">
+    <a class="thumb" href="#"><svg class="th"><use href="#t5"/></svg></a>
+    <span class="cat">Pirsa Hefteyê</span>
+    <h3><a href="#">Pirsa Hefteyê: Çend rê hene?</a></h3>
+    <div class="meta"><span>15 Mijdar 2026</span><span>Berfîn Kaya</span></div>
+    <p class="ex">Di toreke 5×5 de ji goşeya çepê ya jêrîn heta goşeya rastê ya jorîn, heke tenê rast û jor biçî, çend rêyên cuda hene?</p>
+    <a class="more" href="#">Bêtir bixwîne</a>
+    <div class="share"><a href="#">Facebook</a><a href="#">X</a><a href="#">E-name</a><a href="#">WhatsApp</a></div>
+   </article>
+
+   <article class="post" data-cat="Delîlên Bêdeng" data-pop="5">
+    <a class="thumb" href="#"><svg class="th"><use href="#t3"/></svg></a>
+    <span class="cat">Delîlên Bêdeng</span>
+    <h3><a href="#">Delîlên Bêdeng: Berhevoka kûban</a></h3>
+    <div class="meta"><span>12 Mijdar 2026</span><span>Rojda Demir</span></div>
+    <p class="ex">1³ + 2³ + … + n³ = (1 + 2 + … + n)². Ev yeksaniya ecêb bi çend blokên rengîn rastî dibe.</p>
+    <a class="more" href="#">Bêtir bixwîne</a>
+    <div class="share"><a href="#">Facebook</a><a href="#">X</a><a href="#">E-name</a><a href="#">WhatsApp</a></div>
+   </article>
+
+   <article class="post" data-cat="Pêşkêşî · Çavkaniya Înternetê" data-pop="4">
+    <a class="thumb" href="#"><svg class="th"><use href="#t6"/></svg></a>
+    <span class="cat">Pêşkêşî · Çavkaniya Înternetê</span>
+    <h3><a href="#">Pirtûkxaneya pirtûkên vekirî yên matematîkê</a></h3>
+    <div class="meta"><span>9 Mijdar 2026</span><span>Evîn Çelik</span></div>
+    <p class="ex">Pirtûkên dersê yên belaş û azad ji bo xwendevanên hemû astan: ji cebira bingehîn heta analîza rastîn.</p>
+    <a class="more" href="#">Bêtir bixwîne</a>
+    <div class="share"><a href="#">Facebook</a><a href="#">X</a><a href="#">E-name</a><a href="#">WhatsApp</a></div>
+   </article>
+
+   <article class="post" data-cat="Portreya Matematîkzanekî" data-pop="6">
+    <a class="thumb" href="#"><svg class="th"><use href="#t7"/></svg></a>
+    <span class="cat">Portreya Matematîkzanekî</span>
+    <h3><a href="#">Ramanujan: ji gundekî piçûk heta Cambridge</a></h3>
+    <div class="meta"><span>5 Mijdar 2026</span><span>Azad Yıldız</span></div>
+    <p class="ex">Çîroka zilamekî ku bê perwerdeya fermî, bi hezaran formûlên şaşker nivîsî û matematîka hejmaran guhert.</p>
+    <a class="more" href="#">Bêtir bixwîne</a>
+    <div class="share"><a href="#">Facebook</a><a href="#">X</a><a href="#">E-name</a><a href="#">WhatsApp</a></div>
+   </article>
+
+   <article class="post" data-cat="Pêşkêşî · Fîlm / Vîdyo" data-pop="3">
+    <a class="thumb" href="#"><svg class="th"><use href="#t8"/></svg></a>
+    <span class="cat">Pêşkêşî · Fîlm / Vîdyo</span>
+    <h3><a href="#">Çîroka hejmara π</a></h3>
+    <div class="meta"><span>1 Mijdar 2026</span><span>Evîn Çelik</span></div>
+    <p class="ex">Vîdyoyek kurt û balkêş ku rêwîtiya π ji Babîlê heta komputerên îroyîn vedibêje.</p>
+    <a class="more" href="#">Bêtir bixwîne</a>
+    <div class="share"><a href="#">Facebook</a><a href="#">X</a><a href="#">E-name</a><a href="#">WhatsApp</a></div>
+   </article>
+
+  </div>
+  <div class="empty" id="empty"><h3>Tiştek nehat dîtin</h3><p>Ji kerema xwe bi peyveke din bigere.</p></div>
+
+  <div class="pager">
+   <a class="on" href="#">1</a><a href="#">2</a><a href="#">3</a><a href="#">…</a><a href="#">47</a><a href="#">Paşê »</a>
+  </div>
+ </main>
+
+ <aside>
+  <div class="widget about">
+   <h4><span>Der barê me de</span></h4>
+   <div class="av"><svg class="th"><use href="#t7"/></svg></div>
+   <div class="nm">Asîman</div>
+   <p>Em projeyeke dilxwazî ne ku hewl didin matematîkê bi zimanê dayikê, bi Kurmancî, nêzîkî her kesî bikin. Gotar, delîl, portre û pirs li vir in.</p>
+  </div>
+
+  <div class="widget">
+   <h4><span>Bigere</span></h4>
+   <form class="wsearch" id="wform"><input id="wq" type="search" placeholder="Bigere…"><button type="submit" aria-label="Bigere">🔍</button></form>
+  </div>
+
+  <div class="widget" id="bulten">
+   <h4><span>Bûltena Me</span></h4>
+   <form class="nl" id="nl">
+    <p>Nivîsarên nû rasterast bigihîjin e-nameya te.</p>
+    <input type="email" required placeholder="E-nameya te">
+    <button class="btn" type="submit">Bibe abone</button>
+    <div class="ok" id="nlok">Spas! Aboneya te hate tomarkirin.</div>
+   </form>
+  </div>
+
+  <div class="widget">
+   <h4><span>Nivîsarên Populer</span></h4>
+   <ul class="pop" id="pop"></ul>
+  </div>
+
+  <div class="widget">
+   <h4><span>Beş</span></h4>
+   <ul class="cats">
+    <li><a href="#blog" data-cat="Delîlên Bêdeng">Delîlên Bêdeng <span>3</span></a></li>
+    <li><a href="#blog" data-cat="Portreya Matematîkzanekî">Portreya Matematîkzanekî <span>2</span></a></li>
+    <li><a href="#blog" data-cat="Pirsa Hefteyê">Pirsa Hefteyê <span>1</span></a></li>
+    <li><a href="#blog" data-cat="Pêşkêşî">Pêşkêşî <span>2</span></a></li>
+    <li><a href="#blog" data-cat="Hevpeyvîn">Hevpeyvînên Matematîkzanan <span>0</span></a></li>
+   </ul>
+  </div>
+
+  <div class="widget">
+   <h4><span>Etîket</span></h4>
+   <div class="tags">
+    <a href="#blog" data-q="geometrî">geometrî</a><a href="#blog" data-q="cebr">cebr</a><a href="#blog" data-q="hejmar">hejmar</a><a href="#blog" data-q="delîl">delîl</a><a href="#blog" data-q="π">π</a><a href="#blog" data-q="jin">jin di zanistê de</a><a href="#blog" data-q="pirtûk">pirtûk</a>
+   </div>
+  </div>
+ </aside>
+</div>
+
+<!-- footer strip -->
+<div class="strip">
+ <div><svg class="th"><use href="#t1"/></svg></div><div><svg class="th"><use href="#t2"/></svg></div><div><svg class="th"><use href="#t3"/></svg></div>
+ <div><svg class="th"><use href="#t5"/></svg></div><div><svg class="th"><use href="#t6"/></svg></div><div><svg class="th"><use href="#t8"/></svg></div>
+</div>
+
+<footer>
+ <div class="mark"><b>Asîman</b></div>
+ <div class="social"><a href="#" aria-label="Facebook">f</a><a href="#" aria-label="X">X</a><a href="#" aria-label="Instagram">in</a><a href="#" aria-label="YouTube">▶</a></div>
+ <div class="fm"><a href="#">Destpêk</a><a href="#blog">Blog</a><a href="#">Çalakî</a><a href="#bulten">Bibe Abone!</a><a href="#bulten">Bibe Dilxwaz!</a></div>
+ <p>Ev malper projeyeke dilxwazî ye ji bo hezkirina matematîkê.</p>
+ <p>© <span id="yr"></span> Asîman. Hemû maf parastî ne.</p>
+</footer>
+<button class="totop" id="totop" aria-label="Biçe jor">↑</button>
+
+<script>
+(function(){
+ var $=function(s,c){return (c||document).querySelector(s)},$$=function(s,c){return Array.prototype.slice.call((c||document).querySelectorAll(s))};
+ var mehan=['Çile','Sibat','Adar','Nîsan','Gulan','Hezîran','Tîrmeh','Tebax','Îlon','Cotmeh','Mijdar','Kanûn'];
+ var roj=['Yekşem','Duşem','Sêşem','Çarşem','Pêncşem','În','Şemî'];
+ var d=new Date();
+ $('#today').textContent=roj[d.getDay()]+', '+d.getDate()+' '+mehan[d.getMonth()]+' '+d.getFullYear();
+ $('#yr').textContent=d.getFullYear();
+
+ // slider
+ var sl=$$('.slide'),dots=$$('#dots i'),i=0,t;
+ function go(n){sl[i].classList.remove('on');dots[i].classList.remove('on');i=(n+sl.length)%sl.length;sl[i].classList.add('on');dots[i].classList.add('on')}
+ function auto(){clearInterval(t);t=setInterval(function(){go(i+1)},6000)}
+ $('#next').onclick=function(){go(i+1);auto()};$('#prev').onclick=function(){go(i-1);auto()};
+ dots.forEach(function(el,n){el.onclick=function(){go(n);auto()}});auto();
+
+ // menu & search toggles
+ $('#burger').onclick=function(){$('#menu').classList.toggle('open')};
+ $('#sbtn').onclick=function(){var s=$('#searchbar');s.classList.toggle('open');if(s.classList.contains('open'))$('#q').focus()};
+
+ // popular posts
+ var posts=$$('.post');
+ var popList=posts.slice().sort(function(a,b){return b.dataset.pop-a.dataset.pop}).slice(0,4);
+ $('#pop').innerHTML=popList.map(function(p,n){
+  var use=p.querySelector('use').getAttribute('href');
+  return '<li><div class="pt"><em>'+(n+1)+'</em><svg class="th"><use href="'+use+'"/></svg></div><div><h5><a href="#">'+p.querySelector('h3').textContent+'</a></h5><small>'+p.querySelector('.meta span').textContent+'</small></div></li>';
+ }).join('');
+
+ // filtering
+ function norm(s){return s.toLocaleLowerCase('tr')}
+ function apply(cat,q){
+  var shown=0,firstSet=false;
+  posts.forEach(function(p){
+   var ok=true;
+   if(cat&&cat!=='all') ok=norm(p.dataset.cat).indexOf(norm(cat))===0;
+   if(ok&&q) ok=norm(p.textContent).indexOf(norm(q))>-1;
+   p.style.display=ok?'':'none';
+   p.classList.remove('first');
+   if(ok){shown++;if(!firstSet){p.classList.add('first');firstSet=true}}
+  });
+  $('#empty').style.display=shown?'none':'block';
+  var f=$('#finfo');
+  if((cat&&cat!=='all')||q){f.style.display='block';$('#ftext').textContent=(q?'Encama lêgerînê: “'+q+'”':'Beş: '+cat)+' — '+shown+' nivîsar'}
+  else f.style.display='none';
+ }
+ $$('[data-cat]').forEach(function(a){a.addEventListener('click',function(e){
+  var c=a.dataset.cat;
+  if(c==='all'&&a.getAttribute('href')==='#'){e.preventDefault();window.scrollTo({top:0,behavior:'smooth'})}
+  apply(c,'');$('#menu').classList.remove('open');
+ })});
+ $$('[data-q]').forEach(function(a){a.addEventListener('click',function(){apply('all',a.dataset.q)})});
+ function sub(inp){return function(e){e.preventDefault();apply('all',inp.value.trim());$('#blog').scrollIntoView({behavior:'smooth'})}}
+ $('#sform').onsubmit=sub($('#q'));$('#wform').onsubmit=sub($('#wq'));
+ $('#fclear').onclick=function(){apply('all','');$('#q').value='';$('#wq').value=''};
+
+ // newsletter
+ $('#nl').onsubmit=function(e){e.preventDefault();$('#nlok').style.display='block';this.querySelector('input').value=''};
+
+ // back to top
+ var tt=$('#totop');
+ window.addEventListener('scroll',function(){tt.classList.toggle('show',window.scrollY>500)});
+ tt.onclick=function(){window.scrollTo({top:0,behavior:'smooth'})};
+ $$('a[href="#"]').forEach(function(a){a.addEventListener('click',function(e){e.preventDefault()})});
+})();
+</script>
+</body>
+</html>
